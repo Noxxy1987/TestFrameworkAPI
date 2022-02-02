@@ -1,21 +1,19 @@
 package stepDefinitions.employees;
 
+import apiCommon.ApiConstants;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.DataTableType;
 import io.cucumber.java.en.Then;
 import io.restassured.http.Header;
-import io.restassured.http.Headers;
+import model.responses.Employees;
 import utils.Logger;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
-import io.restassured.http.Method;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import utils.TestContext;
 
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.*;
@@ -23,22 +21,25 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-
 public class GetEmployees {
-    public static final String EMPLOYEE_URL = "http://dummy.restapiexample.com/api/v1/employees";
 
     @When("^Get request on v1/employees$")
     public void getRequest() {
-        Response response = get(EMPLOYEE_URL);
+        Response response = get(ApiConstants.EMPLOYEE_ENDPOINT);
         Logger.log("response: ", response.getBody().asString());
         TestContext.INSTANCE.add("response", response);
-//        Assertions.assertEquals(200, response.getStatusCode());
     }
 
     @Then("^Response code is (.*)$")
     public void assertResponseCode(Integer code) {
         Response response = (Response) TestContext.INSTANCE.get("response");
         assertThat(String.format("Invalid response code! Expected: %s, Actual: %s", code, response.getStatusCode()), response.getStatusCode() == code, is(true));
+    }
+
+    @Then("^Response status is (.*)$")
+    public void assertResponseStatus(String status) {
+        Response response = (Response) TestContext.INSTANCE.get("response");
+        assertThat(String.format("Invalid response code! Expected: %s, Actual: %s", status, response.getStatusLine()), response.getStatusLine().contains(status), is(true));
     }
 
     @Then("^Response schema corresponds with baseline: (.*)$")
@@ -49,11 +50,18 @@ public class GetEmployees {
                 .body(matchesJsonSchemaInClasspath(baseline));
     }
 
-    @Then("^Response body corresponds with baseline: (.*)$")
-    public void assertResponseBody(String baseline) {
+    @Then("^Response body contains expected number of employees: (.*)")
+    public void assertResponseBody(int number) throws JsonProcessingException {
         Response response = (Response) TestContext.INSTANCE.get("response");
+        String body = response.getBody().asString();
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Employees employees = mapper.readValue(body, Employees.class);
 
-
+            assertThat("Number of employees is returned is different from expected", employees.getData().size() == number, is(true));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     @When("^Response headers are returned:")

@@ -3,7 +3,7 @@ Feature: Get Employees
   @Scenario1
   Scenario: GET Employee endpoint
     When Get request on v1/employees
-    Then Response code is 200
+    Then Response status is 200 OK
     And Response headers are returned:
       | Cache-Control          | no-cache, private, max-age=31536000 |
       | Content-Encoding       | gzip                                |
@@ -26,3 +26,4 @@ Feature: Get Employees
       | X-Server-Cache         | false                               |
       | X-Sol                  | pub_site                            |
     And Response schema corresponds with baseline: baselines/getEmployeeSchema.json
+    And Response body contains expected number of employees: 24
