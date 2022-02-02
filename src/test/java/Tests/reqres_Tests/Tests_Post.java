@@ -1,4 +1,4 @@
-package reqres_Tests;
+package Tests.reqres_Tests;
 
 import static io.restassured.RestAssured.*;
 

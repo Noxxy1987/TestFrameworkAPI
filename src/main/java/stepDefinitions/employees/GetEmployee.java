@@ -36,7 +36,7 @@ public class GetEmployee {
     @When("^Get request on v1/employee for the user created above$")
     public void getCreatedEmployee() {
         //endpoint only has mock data, employee is not created - using available data
-        //String id = ((Response) TestContext.INSTANCE.get("response")).jsonPath().getString("id");
+        //String id = ((Map<String, Object>) response.jsonPath().get("data")).get("id");
         String id = "23";
 
         Response response = get(ApiConstants.EMPLOYEE_ENDPOINT+id);
@@ -52,5 +52,14 @@ public class GetEmployee {
 
         Boolean identical = expectedData.entrySet().stream().allMatch(e -> e.getValue().equals(String.valueOf(actualData.get(e.getKey()))));
         assertThat("Returned values are correct", identical, is(true));
+    }
+
+    @And("^The response returns message: (.*)")
+    public void assertResponseMessag(String message) {
+        Response response = (Response) TestContext.INSTANCE.get("response");
+        String actualMessage =  response.jsonPath()
+                .get("message");
+
+        assertThat("Returned response does not contain"+message, actualMessage.equals(message), is(true));
     }
 }

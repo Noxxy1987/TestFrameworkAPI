@@ -1,7 +1,7 @@
-Feature: Get Employees
+Feature: Get List of Employees
 
   @Scenario1
-  Scenario: GET Employee endpoint
+  Scenario: GET Employees endpoint
     When Get request on v1/employees
     Then Response status is 200 OK
     And Response headers are returned:
@@ -25,5 +25,5 @@ Feature: Get Employees
       | X-Ratelimit-Remaining  | 58                                  |
       | X-Server-Cache         | false                               |
       | X-Sol                  | pub_site                            |
-    And Response schema corresponds with baseline: baselines/getEmployeeSchema.json
+    And Response schema corresponds with baseline: baselines/getEmployeesSchema.json
     And Response body contains expected number of employees: 24

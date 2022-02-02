@@ -1,4 +1,4 @@
-package reqres_Tests;
+package Tests.reqres_Tests;
 
 import utils.Logger;
 import io.restassured.RestAssured;
@@ -21,6 +21,7 @@ import java.util.Map;
 public class Tests_Get {
     //"https://demoqa.com/utilities/weather/city";
     //"https://reqres.in/api/users"
+
     @Test
     public void getRequest() {
         Response response = RestAssured.request(Method.GET, "https://demoqa.com/utilities/weather/city/Cluj-Napoca");
@@ -34,17 +35,11 @@ public class Tests_Get {
         RestAssured.baseURI = "https://demoqa.com/utilities/weather/city";
         Response responseSimple = RestAssured.get("/Cluj-Napoca");
 
-        //request that you want to send to server - url is specified in BaseURI above
         RequestSpecification httpRequest = RestAssured.given();
 
-        //make the request to the server by specifying the method type (get) and the method URL.
-        //return response to variable
         Response response = httpRequest.request(Method.GET, "/Cluj-Napoca");
-
-        //print the body of the message
         Logger.log("Response is: " + response.getBody().asString());
 
-        //assert response code and value from json
         Assertions.assertEquals(200, response.getStatusCode());
         Assertions.assertEquals("Cluj-Napoca", response.jsonPath().getString("City"));
     }

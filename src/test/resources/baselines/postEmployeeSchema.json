@@ -9,13 +9,12 @@
     {
       "status": "success",
       "data": {
-        "id": 2,
-        "employee_name": "Garrett Winters",
-        "employee_salary": 170750,
-        "employee_age": 63,
-        "profile_image": ""
+        "name": "test_gk_unique",
+        "salary": "123",
+        "age": "23",
+        "id": 622
       },
-      "message": "Successfully! Record has been fetched."
+      "message": "Successfully! Record has been added."
     }
   ],
   "required": [
@@ -42,21 +41,49 @@
       "default": {},
       "examples": [
         {
-          "id": 2,
-          "employee_name": "Garrett Winters",
-          "employee_salary": 170750,
-          "employee_age": 63,
-          "profile_image": ""
+          "name": "test_gk_unique",
+          "salary": "123",
+          "age": "23",
+          "id": 622
         }
       ],
       "required": [
-        "id",
-        "employee_name",
-        "employee_salary",
-        "employee_age",
-        "profile_image"
+        "name",
+        "salary",
+        "age",
+        "id"
       ],
       "properties": {
+        "name": {
+          "$id": "#/properties/data/properties/name",
+          "type": "string",
+          "title": "The name schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "test_gk_unique"
+          ]
+        },
+        "salary": {
+          "$id": "#/properties/data/properties/salary",
+          "type": "string",
+          "title": "The salary schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "123"
+          ]
+        },
+        "age": {
+          "$id": "#/properties/data/properties/age",
+          "type": "string",
+          "title": "The age schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "23"
+          ]
+        },
         "id": {
           "$id": "#/properties/data/properties/id",
           "type": "integer",
@@ -64,47 +91,7 @@
           "description": "An explanation about the purpose of this instance.",
           "default": 0,
           "examples": [
-            2
-          ]
-        },
-        "employee_name": {
-          "$id": "#/properties/data/properties/employee_name",
-          "type": "string",
-          "title": "The employee_name schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            "Garrett Winters"
-          ]
-        },
-        "employee_salary": {
-          "$id": "#/properties/data/properties/employee_salary",
-          "type": "integer",
-          "title": "The employee_salary schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": 0,
-          "examples": [
-            170750
-          ]
-        },
-        "employee_age": {
-          "$id": "#/properties/data/properties/employee_age",
-          "type": "integer",
-          "title": "The employee_age schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": 0,
-          "examples": [
-            63
-          ]
-        },
-        "profile_image": {
-          "$id": "#/properties/data/properties/profile_image",
-          "type": "string",
-          "title": "The profile_image schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": "",
-          "examples": [
-            ""
+            622
           ]
         }
       },
@@ -117,7 +104,7 @@
       "description": "An explanation about the purpose of this instance.",
       "default": "",
       "examples": [
-        "Successfully! Record has been fetched."
+        "Successfully! Record has been added."
       ]
     }
   },

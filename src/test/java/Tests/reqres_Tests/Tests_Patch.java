@@ -1,6 +1,4 @@
-package reqres_Tests;
-
-import static io.restassured.RestAssured.*;
+package Tests.reqres_Tests;
 
 import utils.Logger;
 import io.restassured.http.ContentType;
@@ -9,17 +7,14 @@ import org.json.simple.JSONObject;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import static io.restassured.RestAssured.given;
 
-import static io.restassured.RestAssured.get;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
-public class Tests_Put {
+public class Tests_Patch {
 
     @Test
-    public void putRequestWithHeader() {
+    public void patchRequestWithHeader() {
         JSONObject request = new JSONObject();
-        request.put("name", "John Doe");
+        request.put("name", "Albert Einstein");
 
         Response response = given()
                 .header("ContentType","application/json")
@@ -27,12 +22,12 @@ public class Tests_Put {
                 .accept(ContentType.JSON)
                 .body(request.toJSONString())
                 .when()
-                .put(Constants.API_URL + Constants.USERS_ENDPOINT + "2");
+                .patch(Constants.API_URL + Constants.USERS_ENDPOINT + "/2");
 
 
 
         Assertions.assertEquals(200, response.statusCode());
-        Assertions.assertEquals("John Doe", response.jsonPath().get("name"));
+        Assertions.assertEquals("Albert Einstein", response.jsonPath().get("name"));
         Logger.log("ID: "+ response.jsonPath().get("name"));
     }
 }

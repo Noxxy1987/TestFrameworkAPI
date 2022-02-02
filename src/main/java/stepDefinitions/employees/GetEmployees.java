@@ -25,7 +25,7 @@ public class GetEmployees {
 
     @When("^Get request on v1/employees$")
     public void getRequest() {
-        Response response = get(ApiConstants.EMPLOYEE_ENDPOINT);
+        Response response = get(ApiConstants.EMPLOYEES_ENDPOINT);
         Logger.log("response: ", response.getBody().asString());
         TestContext.INSTANCE.add("response", response);
     }
